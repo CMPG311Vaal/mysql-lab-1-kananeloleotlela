@@ -1,0 +1,146 @@
+
+
+show databases;
+
+create database BidvestBank;
+
+use BidvestBank;
+
+create table BankBranch
+	(
+	branch_name varchar(25),
+	branch_city varchar(30),
+	assets varchar(15)
+	);
+
+create table Customer
+	(
+	customer_name varchar(15),
+	customer_street varchar(30),
+	customer_city varchar(30)
+	);
+
+create table CustomerAccount
+	(
+	account_number char(15) NOT NULL PRIMARY KEY,
+	branch_name varchar(25),
+	balance double
+	);
+
+
+create table Loan
+	(
+	loan_number char(5) NOT NULL PRIMARY KEY,
+	branch_name varchar(25),
+	amount double
+	);
+
+create table Depositor
+	(
+	customer_name varchar(15),
+	account_number char(15)
+	);
+
+create table Borrower
+	(
+	customer_name varchar(15),
+	loan_number char (5)
+	);
+
+create table Employee
+	(
+	employee_name varchar(15),
+	branch_name varchar(25),
+	salary double
+	);
+
+INSERT INTO CustomerAccount
+	VALUES
+		('A-5324', 'Newtown', 500),
+		('A-5624', 'Sunnyside', 400),
+		('A-7794', 'Midrand', 900),
+		('A-4467', 'Mabopane', 700),
+		('A-3546', 'Midrand', 750),
+		('A-3453', 'Universitas', 700),
+		('A-2542', 'Mamelodi', 350);
+
+INSERT INTO BankBranch
+	VALUES
+		('Midrand', 'Johannesburg', 7100000),
+		('Newtown', 'Johannesburg', 9000000),
+		('Mabopane', 'Pretoria', 400000),
+		('Belgravia', 'Kimberly', 3700000),
+		('Sunnyside', 'Pretoria', 1700000),
+		('Amanzimtoti', 'Durban', 300000),
+		('Universitas', 'Bloemfontein', 2100000),
+		('Mamelodi', 'Pretoria', 8000000);
+
+INSERT INTO Customer
+	VALUES
+		('Modise', 'Spring', 'George'),
+		('Brooks', 'Senator', 'Johannesburg'),
+		('Jooste', 'North', 'Kimberly'),
+		('Lombard', 'Sand Hill', 'Nelspruit'),
+		('Mokwena', 'Walnut', 'Port-Elizabeth'),
+		('Johnson', 'Mmabatho', 'Mafikeng'),
+		('Johnson', 'Alma', 'Bloemfontein'),
+		('Zwane', 'Main', 'Mafikeng'),
+		('Linday', 'Park', 'George'),
+		('Smith', 'North', 'Kimberly'),
+		('Dlamini', 'Putnam', 'Port-Elizabeth'),
+		('Williams', 'Nassau', 'Giyane');
+
+INSERT INTO Depositor
+	VALUES
+		('Johnson', 'A-5624'),
+		('Johnson', 'A-5624'),
+		('Johnson', 'A-7794'),
+		('Zwane', 'A-3546'),
+		('Lindsay', 'A-3453'),
+		('Smith', 'A-4467'),
+		('Dlamini', 'A-2542');
+
+INSERT INTO Loan
+	VALUES
+		('L-11', 'Mamelodi', 900),
+		('L-14', 'Newtown', 1500),
+		('L-15', 'Sunnyside', 1500),
+		('L-16', 'Sunnyside', 1300),
+		('L-17', 'Newtown', 1000),
+		('L-23', 'Universitas', 2000),
+		('L-93', 'Mabopane', 500);
+
+INSERT INTO Borrower
+	VALUES
+		('Modise', 'L-16'),
+		('Jooste', 'L-93'),
+		('Johnson', 'L-15'),
+		('Jackson', 'L-14'),
+		('Zwane', 'L-17'),
+		('Smith', 'L-11'),
+		('Smith', 'L-23'),
+		('Williams', 'L-17');
+
+INSERT INTO Employee
+	VALUES
+		('Modise', 'Sunnyside', 1500),
+		('Brown', 'Sunnyside', 1300),
+		('Gopal', 'Sunnyside', 5300),
+		('Johnson', 'Newtown', 1500),
+		('Loreena', 'Newtown', 1300),
+		('Peterson', 'Newtown', 2500),
+		('Rao', 'Austin', 1500),
+		('Sato', 'Austin', 1600);
+
+
+SELECT * FROM CustomerAccount WHERE balance < 700;
+SELECT customer_name FROM Customer WHERE customer_city = 'Johannesburg';
+SELECT * FROM Employee WHERE salary > 1500 && branch_name != 'Newtown';
+SELECT AVG(salary), COUNT(*) FROM Employee;
+SELECT branch_name FROM BankBranch WHERE assets = ( SELECT MAX(assets) FROM BankBranch);
+
+SELECT employee_name FROM Employee WHERE branch_name = 'Sunnyside';
+SELECT * FROM Borrower;
+SELECT account_number FROM CustomerAccount WHERE balance > 900;
+SELECT account_number, balance FROM CustomerAccount WHERE branch_name = 'Newtown' && balance > 600;
+SELECT branch_name, assets FROM BankBranch;
